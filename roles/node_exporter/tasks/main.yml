@@ -1,0 +1,27 @@
+#- name: 'install repo key'
+#  rpm_key:
+#    key: https://packagecloud.io/prometheus-rpm/release/gpgkey
+#    state: present
+
+- name: 'set node exporter repository'
+  yum_repository:
+    name: prometheus-rpm_release
+    baseurl: https://packagecloud.io/prometheus-rpm/release/el/{{ ansible_distribution_major_version }}/$basearch
+    description: prometheus-rpm_release
+    enabled: True
+    gpgcheck: False
+    gpgkey: https://packagecloud.io/prometheus-rpm/release/gpgkey
+    repo_gpgcheck: True
+    state: present
+
+- name: 'install Prometheus Node exporter'
+  yum:
+    name: node_exporter-{{ node_exporter_version }}
+    state: present
+    update_cache: True
+
+- name: 'Start and enable the node_exporter service'
+  service:
+    name: node_exporter
+    enabled: True
+    state: started
