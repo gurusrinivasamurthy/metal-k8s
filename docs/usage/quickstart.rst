@@ -34,13 +34,12 @@ To create an inventory:
 
      .. code:: shell
 
-      $ mkdir inventory
-       $ mkdir inventory/quickstart-cluster
+       $ mkdir -p inventory/quickstart-cluster
        $ cd inventory/quickstart-cluster/
 
-  2. Create the hosts file, which contains a listing of all hosts.
+  2. Create the :file:`hosts` file, which contains a listing of all hosts.
 
-     ::
+     .. code-block::ini
 
         node-01 ansible_host=10.0.0.1 ansible_user=centos
         node-02 ansible_host=10.0.0.2 ansible_user=centos
@@ -65,46 +64,41 @@ To create an inventory:
         kube-node
         kube-master
 
-    Change the IP addresses, domain names, and user names to conform to
+    Change the IP addresses, host names, and user names to conform to
     your infrastructure.
 
- 3. Create a :file:`group_vars` subdirectory in the inventory directory.
+  3. Create a :file:`group_vars` subdirectory in the inventory directory.
 
-  - A second file, called :file:`kube-node.yml`, in a :file:`group_vars`
-    subdirectory of the inventory, declares how to set up storage (in the
-    default configuration) on hosts in the *kube-node* group, that is,
-    hosts on which Pods will be scheduled::
+   - A second file, called :file:`kube-node.yml`, in :file:`group_vars`
+     subdirectory of the inventory, declares how to set up storage (in the
+     default configuration) on hosts in the *kube-node* group; that is,
+     hosts on which Pods will be scheduled
 
-      $ cd ..
-      $ mkdir group_vars ; cd group_vars
+      .. code:: shell
 
- 4. In group_vars, create a file named :file:`kube-node.yml`. This file
-    declares the default storage configuration on hosts in the *kube-node*
-    group—that is, hosts on which Pods shall be scheduled
+       $ mkdir group_vars ; cd group_vars
 
-     .. code-block:: yaml
+   - In :file:`group_vars`, create a file named :file:`kube-node.yml`.
+     This file declares the default storage configuration on hosts in
+     the *kube-node* group—that is, hosts on which Pods shall be
+     scheduled:
 
-         metal_k8s_lvm:
-           vgs:
-             kubevg:
-               drives: ['/dev/vdb']
+      .. code-block:: yaml
 
-    In this example, every *kube-node* host is assumed to have a disk available
-    as :file:`/dev/vdb` which can be used to set up Kubernetes
-    *PersistentVolumes*. For more information about storage, see
-    :doc:`../architecture/storage`.
+          metal_k8s_lvm:
+            vgs:
+              kubevg:
+                drives: ['/dev/vdb']
+
+     In this example, every *kube-node* host is assumed to have a disk available
+     as :file:`/dev/vdb` which can be used to set up Kubernetes
+     *PersistentVolumes*. For more information about storage, see
+     :doc:`../architecture/storage`.
 
 Clone or Copy the MetalK8s Git Repo
 -----------------------------------
 
-Return to the home subdirectory.
-
-.. code-block:: shell
-
-  $ cd
-
-Clone the MetalK8s project from GitHub (if you're building a new machine, you
-may also need to install Git).
+Clone the MetalK8s project from GitHub:
 
 .. code-block:: shell
 
@@ -115,21 +109,21 @@ Enter the MetalK8s Shell
 ------------------------
 
 To install a supported version of Ansible and its dependencies, along with some
-Kubernetes tools (:program:`kubectl` and :program:`helm`), Metal Kubernetes
-provides a :program:`make` target that installs these in a local environment.
-To enter this environment, run ``make shell`` (this takes a few seconds
-when first run).
+Kubernetes tools (:program:`kubectl` and :program:`helm`), MetalK8s
+provides a :program:`make` target that installs these in a local
+environment. To enter this environment, run ``make shell`` (this takes
+a few seconds when first run).
 
   .. code::
 
-   $ cd metal-k8s
+    $ cd metal-k8s
     $ make shell
     Creating virtualenv...
     Installing Python dependencies...
     Downloading kubectl...
     Downloading Helm...
     Launching metal-k8s shell environment. Run 'exit' to quit.
-    (metal-k8s) [centos@node-01 metal-k8s]$
+    (metal-k8s) $
 
 Now, you're all set to deploy a cluster::
 
