@@ -19,7 +19,8 @@
   tags:
     - lvm-storage
   roles:
-    - role: setup_lvm
+    - role: setup_lvm_vg
+    - role: setup_lvm_lv
 
 - hosts: k8s-cluster
   gather_facts: False
