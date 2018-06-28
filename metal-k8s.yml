@@ -38,6 +38,7 @@
     - kube-pv
   roles:
     - role: kube_lvm_storage
+      tags: ['lvm-storage', 'kube-pv']
 
 - hosts: kube-master
   gather_facts: False
@@ -46,12 +47,19 @@
       tags: ['ingress']
     - role: kube_prometheus
       tags: ['kube-prometheus']
+    - role: kube_prometheus_node_exporter
+      tags: ['kube-prometheus', 'node-exporter']
     - role: kube_heapster
       tags: ['heapster']
     - role: kube_elasticsearch
       tags: ['elasticsearch']
     - role: kube_metrics_server
       tags: ['metrics-server']
+
+- hosts: kube-node
+  roles:
+    - role: node_exporter
+      tags: ['kube-prometheus', 'node-exporter']
 
 - hosts: k8s-cluster
   gather_facts: False
