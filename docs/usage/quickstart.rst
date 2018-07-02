@@ -18,6 +18,15 @@ have at least one disk available to provision storage volumes.
 .. _CentOS: https://www.centos.org
 .. _Kubernetes: https://kubernetes.io
 
+Clone or Copy the MetalK8s Git Repo
+-----------------------------------
+
+Clone the MetalK8s project from GitHub:
+
+.. code-block:: shell
+
+   $ git clone https://github.com/scality/metal-k8s
+
 Define an Inventory
 -------------------
 
@@ -29,17 +38,19 @@ that lists all hosts in the cluster, as well as some configuration.
 
 To create an inventory:
 
-  1. Create a directory (for example, :file:`inventory/quickstart-cluster`)
-     in which the inventory will be stored.
+  1. Create a directory inside MetalK8s (for example,
+     :file:`inventory/quickstart-cluster`) in which the inventory will
+     be stored.
 
      .. code:: shell
 
+       $ cd metal-k8s
        $ mkdir -p inventory/quickstart-cluster
        $ cd inventory/quickstart-cluster/
 
   2. Create the :file:`hosts` file, which contains a listing of all hosts.
 
-     .. code-block::ini
+     .. code-block:: ini
 
         node-01 ansible_host=10.0.0.1 ansible_user=centos
         node-02 ansible_host=10.0.0.2 ansible_user=centos
@@ -95,16 +106,6 @@ To create an inventory:
      *PersistentVolumes*. For more information about storage, see
      :doc:`../architecture/storage`.
 
-Clone or Copy the MetalK8s Git Repo
------------------------------------
-
-Clone the MetalK8s project from GitHub:
-
-.. code-block:: shell
-
-   $ git clone https://github.com/scality/metal-k8s
-
-
 Enter the MetalK8s Shell
 ------------------------
 
@@ -116,7 +117,6 @@ a few seconds when first run).
 
   .. code::
 
-    $ cd metal-k8s
     $ make shell
     Creating virtualenv...
     Installing Python dependencies...
